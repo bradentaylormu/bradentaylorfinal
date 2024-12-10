@@ -1,54 +1,58 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Golf Clubs</title>
-    <style>
-        body {
-            background-color: #f4f4f9;
-            color: #333;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            margin: 10px 0;
-        }
-        a {
-            text-decoration: none;
-            color: #007BFF;
-            font-weight: bold;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        img {
-            max-width: 300px;
-            border-radius: 10px;
-        } 
-    </style>
+  <title>Golf Clubs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+	  text-align: center;
+    }
+
+    h1 {
+      color: #00509e;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <h1>Braden's Golf Clubs</h1>
-    <img src="https://t4.ftcdn.net/jpg/05/10/55/87/360_F_510558763_idbSwerRHqy2TxFY29QzZ6FG0kaLSCgU.jpg">
-    <ul id="club-list"></ul>
+  <h1>Braden's Golf Clubs</h1>
+	<img src= "https://t4.ftcdn.net/jpg/05/10/55/87/360_F_510558763_idbSwerRHqy2TxFY29QzZ6FG0kaLSCgU.jpg"/>
+  <ul id="club-list"></ul>
+  <script>
+    const API_URL = 'http://157.230.214.215/api/braden_golf_clubs';
 
-    <script>
-        const apiUrl = "http://157.230.214.215/api/braden_golf_clubs";
-        
-        fetch(apiUrl)
-            .then(result => result.json())
-            .then(data => {
-                const clubList = document.getElementById('club-list');
-                data.forEach(item => {
-                    const listItem = document.createElement('li');
-                    listItem.innerHTML = `<a href="detail.html?id=${item.id}">${item.name}</a>`;
-                    clubList.appendChild(listItem);
-                });
-            })
-            .catch(error => console.error("Error fetching data:", error));
-    </script>
+    fetch(API_URL)
+      .then(result => result.json())
+      .then(data => {
+        const clubList = document.getElementById('club-list');
+        data.forEach(club => {
+          const listItem = document.createElement('li');
+          listItem.innerHTML = `<a href="detail.html?id=${club.id}">${club.Name}</a>`;
+          clubList.appendChild(listItem);
+        });
+      })
+      .catch(error => console.error('Error fetching clubs:', error));
+  </script>
 </body>
 </html>

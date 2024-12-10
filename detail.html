@@ -1,46 +1,50 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Golf Club Details</title>
-    <style>
-        body {
-            background-color: #53ac8a;
-            color: #333;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        img {
-            max-width: 300px;
-            border-radius: 10px;
-        }
-        p {
-            font-size: 18px;
-            margin: 10px 0;
-        }
-    </style>
+  <title>Golf Club Details</title>
+  <style>
+  
+  
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+	  text-align: center;
+    }
+
+    h1 {
+      color: #00509e;
+    }
+
+    img {
+      max-width: 300px;
+      margin: 10px 0;
+    }
+  </style>
 </head>
 <body>
-    <h1>Golf Club Details</h1>
-    <img src="https://t4.ftcdn.net/jpg/05/10/55/87/360_F_510558763_idbSwerRHqy2TxFY29QzZ6FG0kaLSCgU.jpg">
-    <div id="club-details"></div>
+  <h1>Golf Club Details</h1>
+  <div id="details-container"></div>
+  <script>
+    const API_URL = 'http://157.230.214.215/api/braden_golf_clubs';
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
 
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const clubId = params.get('id');
-        const apiUrl = `http://157.230.214.215/api/braden_golf_clubs/${clubId}`;
-
-        fetch(apiUrl)
-            .then(result => result.json())
-            .then(data => {
-                const detailsDiv = document.getElementById('club-details');
-                for (const [key, value] of Object.entries(data)) {
-                    const detailItem = document.createElement('p');
-                    detailItem.textContent = `${key}: ${value}`;
-                    detailsDiv.appendChild(detailItem);
-                }
-            })
-            .catch(error => console.error("Error fetching data:", error));
-    </script>
-		<p><a href="index.html">Return to Club List</a></p>
+    fetch(`${API_URL}/${id}`)
+      .then(result => result.json())
+      .then(club => {
+        const detailsContainer = document.getElementById('details-container');
+        detailsContainer.innerHTML = `
+          <img src="${club.Image}" alt="${club.Name}">
+          <h2>${club.Name}</h2>
+          <p>Type: ${club.Type}</p>
+          <p>Distance: ${club.Distance} yards</p>
+        `;
+      })
+      .catch(error => console.error('Error fetching club details:', error));
+  </script>
+    <a href="Index.html">Back to Club List</a>
 </body>
 </html>
